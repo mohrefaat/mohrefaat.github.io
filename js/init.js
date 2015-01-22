@@ -64,7 +64,8 @@
 				activePanelId = null,
 				firstPanelId = null,
 				isLocked = false,
-				hash = window.location.hash.substring(1);
+				hash = window.location.hash.substring(1).split('/')[0];
+				subhash = window.location.hash.split('/')[1];
 		
 			if (skel.vars.isTouch) {
 				
@@ -124,7 +125,7 @@
 								if (i == 0)
 									window.location.hash = '#';
 								else
-									window.location.hash = '#' + id;
+									window.location.hash = '#' + id + (subhash ? '/' + subhash : '');
 
 							// Add bottom padding.
 								var x = parseInt($wrapper.css('padding-top')) +
@@ -176,7 +177,7 @@
 				// Nav + Jumplinks.
 					$nav_links.add($jumplinks).click(function(e) {
 						var t = $(this), href = t.attr('href'), id;
-					
+						subhash = null;
 						if (href.substring(0,1) == '#') {
 							
 							e.preventDefault();
@@ -189,6 +190,23 @@
 						
 						}
 					
+					});
+
+				// Work items
+					$('#work a').click(function(e){
+						var t = $(this), href = t.attr('href'), id;
+
+						if (href.substring(0,1) == '#') {
+							
+							e.preventDefault();
+							e.stopPropagation();
+
+							id = href.split('/')[1];
+							
+							if (id in panels)
+								panels[id]._activate();
+						
+						}
 					});
 				
 				// Window.
@@ -228,7 +246,7 @@
 						panels[hash]._activate(true);
 
 					$wrapper.fadeTo(400, 1.0);
-				
+
 			}
 					
 		});

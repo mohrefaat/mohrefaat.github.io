@@ -432,6 +432,16 @@
 		position: relative;
 	}
 
+		.panel a
+		{
+			text-decoration: none;
+		}
+
+			.panel a div
+			{
+				text-align: center;	
+			}
+
 	/* Me */
 	
 		#me
